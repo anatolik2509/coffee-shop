@@ -1,0 +1,100 @@
+cabal-version: 2.2
+
+-- This file has been generated from package.yaml by hpack version 0.35.2.
+--
+-- see: https://github.com/sol/hpack
+
+name:           coffee-shop-backend
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/anatolik2509/coffee-shop-backend#readme>
+homepage:       https://github.com/anatolik2509/coffee-shop-backend#readme
+bug-reports:    https://github.com/anatolik2509/coffee-shop-backend/issues
+author:         Anatoly Antonov
+maintainer:     antonov250901@gmail.com
+copyright:      2023 Anatoly Antonov
+license:        BSD-3-Clause
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    CHANGELOG.md
+
+source-repository head
+  type: git
+  location: https://github.com/anatolik2509/coffee-shop-backend
+
+library
+  exposed-modules:
+      Auth
+      Config
+      Db
+      Dsl.KeyedRecord
+      Dsl.Menu
+      Dsl.Order
+      Dsl.Organization
+      Dsl.User
+      Lib
+      Web
+  other-modules:
+      Paths_coffee_shop_backend
+  autogen-modules:
+      Paths_coffee_shop_backend
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
+  build-depends:
+      Decimal
+    , base >=4.7 && <5
+    , configurator
+    , http-types
+    , postgresql-migration
+    , postgresql-simple
+    , resource-pool
+    , scotty
+    , transformers
+  default-language: Haskell2010
+
+executable coffee-shop-backend-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_coffee_shop_backend
+  autogen-modules:
+      Paths_coffee_shop_backend
+  hs-source-dirs:
+      app
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      Decimal
+    , base >=4.7 && <5
+    , coffee-shop-backend
+    , configurator
+    , http-types
+    , postgresql-migration
+    , postgresql-simple
+    , resource-pool
+    , scotty
+    , transformers
+  default-language: Haskell2010
+
+test-suite coffee-shop-backend-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_coffee_shop_backend
+  autogen-modules:
+      Paths_coffee_shop_backend
+  hs-source-dirs:
+      test
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      Decimal
+    , base >=4.7 && <5
+    , coffee-shop-backend
+    , configurator
+    , http-types
+    , postgresql-migration
+    , postgresql-simple
+    , resource-pool
+    , scotty
+    , transformers
+  default-language: Haskell2010
