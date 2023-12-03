@@ -46,12 +46,15 @@ library
       Decimal
     , base >=4.7 && <5
     , configurator
+    , directory
     , http-types
     , postgresql-migration
     , postgresql-simple
     , resource-pool
     , scotty
+    , time
     , transformers
+    , wai-extra
   default-language: Haskell2010
 
 executable coffee-shop-backend-exe
@@ -68,12 +71,15 @@ executable coffee-shop-backend-exe
     , base >=4.7 && <5
     , coffee-shop-backend
     , configurator
+    , directory
     , http-types
     , postgresql-migration
     , postgresql-simple
     , resource-pool
     , scotty
+    , time
     , transformers
+    , wai-extra
   default-language: Haskell2010
 
 test-suite coffee-shop-backend-test
@@ -91,10 +97,13 @@ test-suite coffee-shop-backend-test
     , base >=4.7 && <5
     , coffee-shop-backend
     , configurator
+    , directory
     , http-types
     , postgresql-migration
     , postgresql-simple
     , resource-pool
     , scotty
+    , time
     , transformers
+    , wai-extra
   default-language: Haskell2010

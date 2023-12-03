@@ -4,7 +4,7 @@ import Database.PostgreSQL.Simple
 import Config (ApplicationConfig (..))
 import Data.Word (Word16)
 import Data.Pool (PoolConfig, defaultPoolConfig, Pool, newPool, withResource)
-import Database.PostgreSQL.Simple.Migration (MigrationCommand (MigrationDirectory), defaultOptions, runMigrations)
+import Database.PostgreSQL.Simple.Migration (MigrationCommand (MigrationDirectory, MigrationInitialization), defaultOptions, runMigrations)
 import Control.Monad.Trans.Reader (ReaderT, ask)
 import Database.PostgreSQL.Simple.Migration.V1Compat (MigrationResult)
 import Control.Monad.IO.Class (MonadIO(liftIO))
@@ -22,7 +22,7 @@ timeBeforeDestroyConnectionSec :: Double
 timeBeforeDestroyConnectionSec = 10.0
 
 maxConnects :: Int
-maxConnects = 10
+maxConnects = 20
 
 createConnectionPoolConfig :: ConnectInfo -> PoolConfig Connection
 createConnectionPoolConfig connectInfo = defaultPoolConfig (connect connectInfo) close timeBeforeDestroyConnectionSec maxConnects
@@ -32,7 +32,7 @@ createMigrationCommand appConfig = MigrationDirectory $ migrationsPath appConfig
 
 executeMigration :: Pool Connection -> MigrationCommand -> IO (MigrationResult String)
 executeMigration pool command = withResource pool runCommand
-                                    where runCommand conn = runMigrations conn defaultOptions [command]
+                                    where runCommand conn = runMigrations conn defaultOptions [MigrationInitialization, command]
 
 startDbModule :: ReaderT ApplicationConfig IO (Pool Connection)
 startDbModule = do
@@ -41,5 +41,6 @@ startDbModule = do
     let connectInfo = createConnectionInfo appConfig
     let poolConfig = createConnectionPoolConfig connectInfo
     pool <- liftIO $ newPool poolConfig
-    let _ = executeMigration pool migrationCommand
+    migrationsResult <- liftIO $ executeMigration pool migrationCommand
+    let _ = print migrationsResult
     return pool

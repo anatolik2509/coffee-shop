@@ -29,6 +29,9 @@ dependencies:
 - resource-pool
 - postgresql-simple
 - postgresql-migration
+- directory
+- time
+- wai-extra
 
 ghc-options:
 - -Wall
