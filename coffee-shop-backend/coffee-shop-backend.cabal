@@ -44,10 +44,15 @@ library
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
       Decimal
+    , aeson
     , base >=4.7 && <5
+    , bcrypt
+    , bytestring
     , configurator
     , directory
+    , exceptions
     , http-types
+    , listsafe
     , postgresql-migration
     , postgresql-simple
     , resource-pool
@@ -68,11 +73,16 @@ executable coffee-shop-backend-exe
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       Decimal
+    , aeson
     , base >=4.7 && <5
+    , bcrypt
+    , bytestring
     , coffee-shop-backend
     , configurator
     , directory
+    , exceptions
     , http-types
+    , listsafe
     , postgresql-migration
     , postgresql-simple
     , resource-pool
@@ -94,11 +104,16 @@ test-suite coffee-shop-backend-test
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       Decimal
+    , aeson
     , base >=4.7 && <5
+    , bcrypt
+    , bytestring
     , coffee-shop-backend
     , configurator
     , directory
+    , exceptions
     , http-types
+    , listsafe
     , postgresql-migration
     , postgresql-simple
     , resource-pool

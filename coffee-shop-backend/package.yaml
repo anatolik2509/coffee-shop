@@ -32,6 +32,11 @@ dependencies:
 - directory
 - time
 - wai-extra
+- bytestring
+- listsafe
+- bcrypt
+- aeson
+- exceptions
 
 ghc-options:
 - -Wall
