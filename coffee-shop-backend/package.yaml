@@ -31,12 +31,14 @@ dependencies:
 - postgresql-migration
 - directory
 - time
+- wai
 - wai-extra
 - bytestring
 - listsafe
 - bcrypt
 - aeson
 - exceptions
+- uuid
 
 ghc-options:
 - -Wall

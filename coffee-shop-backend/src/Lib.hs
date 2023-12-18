@@ -5,14 +5,14 @@ module Lib
     ) where
 
 import Config (readConfig, ApplicationConfig(..))
-import Web (startScotty)
+import Web (startScotty, makeRoutes)
 import System.Environment (getArgs)
 import Control.Monad.Trans.Reader (ReaderT (runReaderT))
 import Db (startDbModule)
 import Database.PostgreSQL.Simple (Connection)
 import Web.Scotty (ActionM, ScottyM)
 import Data.Pool (Pool)
-import Auth (registrationRoute)
+import Auth.Web (registrationRoute)
 
 parseArgs :: IO FilePath
 parseArgs = do
@@ -22,11 +22,8 @@ parseArgs = do
         then wrongArgsCount
         else return $ head args
 
-routes :: Pool Connection -> [ScottyM ()]
-routes pool = [registrationRoute pool]
-
 initAppWithApplicationConfig :: ReaderT ApplicationConfig IO ()
-initAppWithApplicationConfig = startDbModule >>= startScotty . routes 
+initAppWithApplicationConfig = startDbModule >>= startScotty . makeRoutes
 
 
 startApp :: IO ()

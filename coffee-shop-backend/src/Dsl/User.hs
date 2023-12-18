@@ -21,7 +21,7 @@ data CredentialType = Password | AccessToken
 
 data Credentials = Credentials {
     user :: KeyedRecord Integer User,
-    cred_type :: CredentialType,
-    value :: String,
+    credType :: CredentialType,
+    credValue :: String,
     expireDate :: Maybe UTCTime
 }
