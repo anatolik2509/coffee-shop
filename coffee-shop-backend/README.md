@@ -5,8 +5,9 @@
 
 # REST
 ## Authentication
-- `GET  /auth/login` - получить токен
+- `POST /auth/getToken` - получить токен
 - `POST /auth/register` - зарегистрироваться
+- `GET  /auth/checkToken` - проверить токен
 
 ## User
 - `GET /user` - информация о текущем пользователе

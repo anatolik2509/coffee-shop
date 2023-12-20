@@ -1,23 +1,23 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE InstanceSigs #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
+{-# LANGUAGE FlexibleInstances #-}
 
 module Auth.Db where
 
 import Database.PostgreSQL.Simple
 import qualified Data.List.Safe as Safe
-import Control.Monad (void, join)
+import Control.Monad (void)
 import Data.ByteString (ByteString)
 import Database.PostgreSQL.Simple.ToField (ToField (..), Action (..))
 import qualified Dsl.User as U
-import Data.ByteString.Char8 (pack)
+import Data.ByteString.Char8 (pack, unpack)
 import Database.PostgreSQL.Simple.FromField (FromField (fromField), conversionError, FieldParser)
 import Dsl.User (Role)
-import Database.PostgreSQL.Simple.FromRow (field, RowParser)
+import Database.PostgreSQL.Simple.FromRow (field, RowParser, FromRow (fromRow))
 import Control.Exception (Exception, throw)
-import Data.ByteString.Char8 (unpack)
-import Data.Time (getCurrentTime, addUTCTime, secondsToDiffTime, secondsToNominalDiffTime, UTCTime (UTCTime))
-import Dsl.KeyedRecord (KeyedRecord)
+import Data.Time (getCurrentTime, addUTCTime, secondsToNominalDiffTime)
+import Dsl.KeyedRecord (KeyedRecord (..))
 import Data.Maybe (fromMaybe)
 
 
@@ -32,8 +32,8 @@ existsTokenForUserId conn userId token = let queryResult = (query conn existsTok
 findUserByTokenQuery :: Query
 findUserByTokenQuery = "select u.* from coffee_user u join credentials c on u.id = c.user_id where cred_type = 'TOKEN' and cred_value = ? and expires_at > now();"
 
-findUserByToken :: Connection -> String -> IO U.User
-findUserByToken conn token = let queryResult = query conn findUserByTokenQuery $ Only token :: IO [U.User] in
+findUserByToken :: Connection -> String -> IO (KeyedRecord Integer U.User)
+findUserByToken conn token = let queryResult = query conn findUserByTokenQuery $ Only token :: IO [KeyedRecord Integer U.User] in
                                         fmap (fromMaybe (throw NoSuchUserException) . Safe.head) queryResult
 
 
@@ -108,3 +108,9 @@ instance FromField U.Role where
           "ORGANIZATION" -> return U.OrganizationRole
           _ ->              conversionError RoleConversionException
     in maybe (conversionError RoleConversionException) roleValue roleValueStrMaybe
+
+instance FromRow (KeyedRecord Integer U.User) where
+  fromRow :: RowParser (KeyedRecord Integer U.User)
+  fromRow = do
+    userId <- field :: RowParser Integer
+    Record userId <$> (U.User <$> field <*> field <*> field <*> field <*> field)

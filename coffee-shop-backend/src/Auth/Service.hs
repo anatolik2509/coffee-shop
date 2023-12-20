@@ -11,6 +11,7 @@ import Auth.Model.RegistrationRequest (RegistrationForm(email))
 import Data.UUID.V4
 import Data.UUID
 import Dsl.User (User)
+import Dsl.KeyedRecord (KeyedRecord)
 
 
 data PasswordHashingException = PasswordHashingException deriving (Show)
@@ -61,7 +62,7 @@ createToken conn userEmail = do
     return token
 
 
-getUserByToken :: Connection -> String -> IO User
+getUserByToken :: Connection -> String -> IO (KeyedRecord Integer U.User)
 getUserByToken = findUserByToken
 
 checkToken :: Connection -> Integer -> String -> IO Bool

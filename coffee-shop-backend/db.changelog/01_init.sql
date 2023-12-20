@@ -34,3 +34,10 @@ CREATE TABLE credentials (
     cred_value VARCHAR(1000),
     expires_at TIMESTAMP
 )
+
+CREATE TABLE menu_item (
+    id BIGSERIAL PRIMARY KEY NOT NULL,
+    coffee_shop_id BIGINT REFERENCES coffee_shop(id) NOT NULL,
+    item_name VARCHAR(100) NOT NULL,
+    price NUMERIC NOT NULL
+)

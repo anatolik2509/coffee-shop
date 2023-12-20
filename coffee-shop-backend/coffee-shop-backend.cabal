@@ -27,11 +27,17 @@ library
   exposed-modules:
       Auth.Db
       Auth.Model.AuthenticationInfo
+      Auth.Model.CheckTokenResponse
       Auth.Model.LoginRequest
       Auth.Model.LoginResponse
       Auth.Model.RegistrationRequest
       Auth.Service
       Auth.Web
+      CoffeeShop.Db
+      CoffeeShop.Model.CoffeeShopsResponse
+      CoffeeShop.Model.CreateCoffeeShopRequest
+      CoffeeShop.Service
+      CoffeeShop.Web
       Config
       Db
       Dsl.KeyedRecord
@@ -40,6 +46,8 @@ library
       Dsl.Organization
       Dsl.User
       Lib
+      Menu.Db
+      Menu.Service
       Web
   other-modules:
       Paths_coffee_shop_backend
@@ -62,7 +70,8 @@ library
     , postgresql-migration
     , postgresql-simple
     , resource-pool
-    , scotty
+    , scotty >=0.21
+    , text
     , time
     , transformers
     , uuid
@@ -94,7 +103,8 @@ executable coffee-shop-backend-exe
     , postgresql-migration
     , postgresql-simple
     , resource-pool
-    , scotty
+    , scotty >=0.21
+    , text
     , time
     , transformers
     , uuid
@@ -127,7 +137,8 @@ test-suite coffee-shop-backend-test
     , postgresql-migration
     , postgresql-simple
     , resource-pool
-    , scotty
+    , scotty >=0.21
+    , text
     , time
     , transformers
     , uuid

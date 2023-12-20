@@ -19,6 +19,6 @@ data OrganizationInfo = OrganizationInfo {
 data CoffeeShop = CoffeeShop {
     name :: String,
     address :: String,
-    logoUrl :: Maybe String,
-    owner :: KeyedRecord Integer User
+    owner :: KeyedRecord Integer User,
+    logoUrl :: Maybe String
 }
